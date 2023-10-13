@@ -10,6 +10,8 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] [Range(0, 5)] float speed = 2f;
     float waitTime = 1f;
 
+    Enemy enemy;
+
     void OnEnable()
     {
         FindPath();
@@ -18,6 +20,11 @@ public class EnemyMover : MonoBehaviour
 
         //InvokeRepeating("PrintWaypointName", 0, 1);
         StartCoroutine(FollowPath());
+    }
+
+    private void Start()
+    {
+        enemy = GetComponent<Enemy>();
     }
 
     void ReturnToStart()
@@ -56,6 +63,7 @@ public class EnemyMover : MonoBehaviour
             }
         }
 
+        enemy.StealMoney();
         gameObject.SetActive(false);
     }
 }
