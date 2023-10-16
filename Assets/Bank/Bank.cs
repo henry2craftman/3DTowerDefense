@@ -19,6 +19,7 @@ public class Bank : MonoBehaviour
     {
         currentBalance = startBalance;
         UpdateBalanceText();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void UpdateBalanceText()

@@ -6,9 +6,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [Tooltip("적이 죽었을 경우 보상의 정도")]
-    [SerializeField] [Range(1, 100)] int moneyReward = 25;
+    [SerializeField] [Range(1, 10000)] int moneyReward = 25;
     [Tooltip("적이 죽었을 경우 벌점의 정도")]
-    [SerializeField] [Range(1, 100)] int moneyPanalty = 25;
+    [SerializeField] [Range(1, 1000)] int moneyPanalty = 25;
 
     Bank bank;
 
