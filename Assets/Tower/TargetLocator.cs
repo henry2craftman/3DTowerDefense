@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
+[RequireComponent(typeof(Tower))]
 public class TargetLocator : MonoBehaviour
 {
+    [Tooltip("타워에서 물체를 향해 회전하는 무기 오브젝트")]
     [SerializeField] Transform weapon;
-    [SerializeField] Transform target;
-    [SerializeField] float range = 15f;
+    [Tooltip("타워의 공격 범위")]
+    [SerializeField] [Range(1, 200)] float range = 15f;
+    [Tooltip("타워의 무기(파티클)")]
     [SerializeField] ParticleSystem weaponParticle;
+    Transform target;
 
     void Start()
     {

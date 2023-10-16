@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 // Waypoint로 에네미를 이동
+[RequireComponent(typeof(EnemyHealth))]
 public class EnemyMover : MonoBehaviour
 {
+    [Tooltip("적의 이동 경로")]
     [SerializeField] List<Waypoint> path = new List<Waypoint>();
-    [SerializeField] [Range(0, 5)] float speed = 2f;
+    [Tooltip("적의 이동 속도")]
+    [SerializeField] [Range(1, 10)] float speed = 2f;
     float waitTime = 1f;
-
     Enemy enemy;
 
     void OnEnable()
@@ -63,6 +66,11 @@ public class EnemyMover : MonoBehaviour
             }
         }
 
+        FinishPath();
+    }
+
+    private void FinishPath()
+    {
         enemy.StealMoney();
         gameObject.SetActive(false);
     }

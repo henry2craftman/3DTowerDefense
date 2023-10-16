@@ -8,9 +8,10 @@ using UnityEngine;
 [ExecuteAlways]
 public class CoordinateLabeler : MonoBehaviour
 {
+    [Tooltip("TMPro label의 기본 색상")]
     [SerializeField] Color defaultColor = Color.white;
+    [Tooltip("Tile에 배치 불가능 한 경우 TMPro label의 기본 색상")]
     [SerializeField] Color blockColor = Color.gray;
-
     TextMeshPro label;
     Vector2Int coordinates = new Vector2Int();
     Waypoint waypoint;
@@ -18,7 +19,7 @@ public class CoordinateLabeler : MonoBehaviour
     void Start()
     {
         label = GetComponent<TextMeshPro>();
-        label.enabled = false;
+        label.enabled = true;
 
         waypoint = GetComponentInParent<Waypoint>();
         DisplayCoordinates();

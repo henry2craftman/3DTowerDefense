@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyHealth))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] int moneyReward = 25;
-    [SerializeField] int moneyPanalty = 25;
+    [Tooltip("적이 죽었을 경우 보상의 정도")]
+    [SerializeField] [Range(1, 100)] int moneyReward = 25;
+    [Tooltip("적이 죽었을 경우 벌점의 정도")]
+    [SerializeField] [Range(1, 100)] int moneyPanalty = 25;
 
     Bank bank;
 
