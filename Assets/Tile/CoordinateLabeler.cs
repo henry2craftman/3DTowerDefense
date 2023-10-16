@@ -12,12 +12,20 @@ public class CoordinateLabeler : MonoBehaviour
     [SerializeField] Color defaultColor = Color.white;
     [Tooltip("Tile에 배치 불가능 한 경우 TMPro label의 기본 색상")]
     [SerializeField] Color blockColor = Color.gray;
+    [SerializeField] Color pathColor = Color.yellow;
+    [SerializeField] Color exploredColor = new Color(1f, 0.5f, 0f);
+
     TextMeshPro label;
     Vector2Int coordinates = new Vector2Int();
     Waypoint waypoint;
 
+    GridManager gridManager;
+
+
     void Start()
     {
+        gridManager = FindObjectOfType<GridManager>();
+
         label = GetComponent<TextMeshPro>();
         label.enabled = true;
 
@@ -48,20 +56,34 @@ public class CoordinateLabeler : MonoBehaviour
 
     private void SetLabelColor()
     {
-        if(waypoint.IsPlaceable)
+        if (gridManager == null) return;
+
+        Node node = gridManager.GetNode(coordinates);
+
+        if (node == null) return;
+
+        if(!node.isWalkable)
         {
-            label.color = defaultColor;
+            label.color = blockColor;
+        }
+        else if(node.isPath)
+        {
+            label.color = pathColor;
+        }
+        else if(node.isExplored)
+        {
+            label.color = exploredColor;
         }
         else
         {
-            label.color = blockColor;
+            label.color = defaultColor;
         }
     }
 
     private void DisplayCoordinates()
     {
-        coordinates.x = Mathf.RoundToInt(transform.parent.position.x);
-        coordinates.y = Mathf.RoundToInt(transform.parent.position.z);
+        coordinates.x = Mathf.RoundToInt(transform.parent.position.x / UnityEditor.EditorSnapSettings.gridSize.x);
+        coordinates.y = Mathf.RoundToInt(transform.parent.position.z / UnityEditor.EditorSnapSettings.gridSize.z);
         label.text = $"{coordinates.x},{coordinates.y}";
     }
 
