@@ -9,11 +9,14 @@ using UnityEngine;
 public class EnemyMover : MonoBehaviour
 {
     [Tooltip("적의 이동 경로")]
-    [SerializeField] List<Waypoint> path = new List<Waypoint>();
+    [SerializeField] List<Node> path = new List<Node>();
     [Tooltip("적의 이동 속도")]
     [SerializeField] [Range(1, 10)] float speed = 2f;
     float waitTime = 1f;
     Enemy enemy;
+
+    PathFinder pathFinder;
+    GridManager gridManager;
 
     void OnEnable()
     {
@@ -25,37 +28,34 @@ public class EnemyMover : MonoBehaviour
         StartCoroutine(FollowPath());
     }
 
-    private void Start()
+    private void Awake()
     {
         enemy = GetComponent<Enemy>();
+        pathFinder = FindObjectOfType<PathFinder>();
+        gridManager = FindObjectOfType<GridManager>();
     }
 
     void ReturnToStart()
     {
-        transform.position = path[0].transform.position;
+        transform.position = gridManager.GetPositionFromCoordinates(pathFinder.StartCoordinates);
     }
 
     private void FindPath()
     {
         path.Clear();
 
-        GameObject pathParent = GameObject.FindGameObjectWithTag("Path");
-
-        foreach(Transform child in pathParent.transform)
-        {
-            path.Add(child.GetComponent<Waypoint>());
-        }
+        path = pathFinder.GetNewPath();
     }
 
     IEnumerator FollowPath()
     {
-        foreach (var waypoint in path)
+        foreach (var path in path)
         {
             Vector3 startPos = transform.position;
-            Vector3 endPos = waypoint.transform.position;
+            Vector3 endPos = gridManager.GetPositionFromCoordinates(path.coordinates);
             float travelPercent = 0f;
 
-            transform.LookAt(waypoint.transform);
+            transform.LookAt(endPos);
 
             while(travelPercent < waitTime)
             {

@@ -7,7 +7,10 @@ public class PathFinder : MonoBehaviour
 {
     [SerializeField] GameObject indicator;
     [SerializeField] Vector2Int startCoordinates;
+    public Vector2Int StartCoordinates { get { return startCoordinates; } }
     [SerializeField] Vector2Int destinationCoordinates;
+    public Vector2Int DestinationCoordinates { get { return destinationCoordinates; } }
+
 
     Node startNode;
     Node destinationNode;
@@ -31,13 +34,20 @@ public class PathFinder : MonoBehaviour
         }
 
         // 시작시 시작위치와 도착지 위치 노드 설정
-        startNode = new Node(startCoordinates, true);
-        destinationNode = new Node(destinationCoordinates, true);
+        startNode = grid[startCoordinates];
+        destinationNode = grid[destinationCoordinates];
     }
 
     private void Start()
     {
-        StartCoroutine(BFS());
+        GetNewPath();
+    }
+
+    public List<Node> GetNewPath()
+    {
+        gridManager.ResetNode();
+        BFS();
+        return BuildPath();
     }
 
     // 인접 좌표를 확인하는 함수
@@ -62,6 +72,7 @@ public class PathFinder : MonoBehaviour
                 // 방문하지 않은 좌표라면, reched에 해당 좌표를 추가하여 방문한 것으로 만들어준다.
                 if(!reached.ContainsKey(neighbor.coordinates) && neighbor.isWalkable)
                 {
+                    neighbor.connectedTo = currentNode;
                     reached.Add(neighbor.coordinates, neighbor);
                     frontier.Enqueue(neighbor);
                 }
@@ -69,8 +80,11 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    IEnumerator BFS()
+    void BFS()
     {
+        frontier.Clear();
+        reached.Clear();
+
         frontier.Enqueue(startNode); // 그래프의 시작 노드
         reached.Add(startCoordinates, startNode); // 이미 방문한 것을 확인
 
@@ -87,8 +101,33 @@ public class PathFinder : MonoBehaviour
             {
                 break;
             }
-            
-            yield return new WaitForSeconds(0.5f);
         }
     }
+
+    List<Node> BuildPath()
+    {
+        List<Node> path = new List<Node>();
+        Node currentNode = destinationNode;
+
+        path.Add(currentNode);
+        currentNode.isPath = true;
+
+        while(currentNode.connectedTo != null)
+        {
+            // 1. 현재 연결된 이전 노드를 currentNode라고 한다.
+            currentNode = currentNode.connectedTo;
+
+            // 2. path라는 노드 리스트에 담는다.
+            path.Add(currentNode);
+
+            // 3. 경로라고 말해줌(isPath)
+            currentNode.isPath = true;
+        }
+
+        path.Reverse();
+
+        return path;
+    }
+
+
 }
