@@ -20,12 +20,11 @@ public class EnemyMover : MonoBehaviour
 
     void OnEnable()
     {
+        ReturnToStart();
+        
         FindPath();
 
-        ReturnToStart();
-
-        //InvokeRepeating("PrintWaypointName", 0, 1);
-        StartCoroutine(FollowPath());
+        //StartCoroutine(FollowPath());
     }
 
     private void Awake()
@@ -44,20 +43,25 @@ public class EnemyMover : MonoBehaviour
     {
         path.Clear();
 
-        path = pathFinder.GetNewPath();
+        StopAllCoroutines();
+
+        Vector2Int newCoordinates = gridManager.GetCoordinatesFromPosition(transform.position);
+        path = pathFinder.GetNewPath(newCoordinates);
+
+        StartCoroutine(FollowPath());
     }
 
     IEnumerator FollowPath()
     {
-        foreach (var path in path)
+        for(int i = 1; i < path.Count; i++)
         {
             Vector3 startPos = transform.position;
-            Vector3 endPos = gridManager.GetPositionFromCoordinates(path.coordinates);
+            Vector3 endPos = gridManager.GetPositionFromCoordinates(path[i].coordinates);
             float travelPercent = 0f;
 
             transform.LookAt(endPos);
 
-            while(travelPercent < waitTime)
+            while (travelPercent < waitTime)
             {
                 travelPercent += Time.deltaTime * speed;
                 transform.position = Vector3.Lerp(startPos, endPos, travelPercent);

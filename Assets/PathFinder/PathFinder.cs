@@ -45,8 +45,13 @@ public class PathFinder : MonoBehaviour
 
     public List<Node> GetNewPath()
     {
+        return GetNewPath(startCoordinates);
+    }
+
+    public List<Node> GetNewPath(Vector2Int coordinates)
+    {
         gridManager.ResetNode();
-        BFS();
+        BFS(coordinates);
         return BuildPath();
     }
 
@@ -80,13 +85,16 @@ public class PathFinder : MonoBehaviour
         }
     }
 
-    void BFS()
+    void BFS(Vector2Int coordinates)
     {
+        grid[coordinates].isWalkable = true;
+        destinationNode.isWalkable = true;
+
         frontier.Clear();
         reached.Clear();
 
-        frontier.Enqueue(startNode); // 그래프의 시작 노드
-        reached.Add(startCoordinates, startNode); // 이미 방문한 것을 확인
+        frontier.Enqueue(grid[coordinates]); // 그래프의 시작 노드
+        reached.Add(coordinates, grid[coordinates]); // 이미 방문한 것을 확인
 
         while(frontier.Count > 0)
         {
@@ -129,5 +137,8 @@ public class PathFinder : MonoBehaviour
         return path;
     }
 
-
+    public void Broadcast()
+    {
+        BroadcastMessage("FindPath", SendMessageOptions.DontRequireReceiver);
+    }
 }
