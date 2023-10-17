@@ -771,6 +771,10 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 8702378692449162873, guid: 3228c8220e0f2ba408751e1f0eb880fd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4332,7 +4336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8440175058925492278, guid: 0d8bde1668be6ea4e83db71b8ae0d09b, type: 3}
       propertyPath: poolSize
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8440175058925492278, guid: 0d8bde1668be6ea4e83db71b8ae0d09b, type: 3}
       propertyPath: enemyPrefab

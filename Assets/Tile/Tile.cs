@@ -50,7 +50,7 @@ public class Tile : MonoBehaviour
     private void OnMouseDown()
     {
         // isPlaceable이거나 && 만약 타일 위로 Enemy가 지나가고 있지 않으면
-        if (isPlaceable)
+        if (isPlaceable && !gridManager.Grid[coordinates].isEnemyWaking)
         {
             bool isPlaced = towerPrefab.CreateTower(towerPrefab, transform.position);
             

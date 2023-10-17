@@ -61,6 +61,7 @@ public class EnemyMover : MonoBehaviour
 
             transform.LookAt(endPos);
 
+            path[i].isEnemyWaking = true;
             while (travelPercent < waitTime)
             {
                 travelPercent += Time.deltaTime * speed;
@@ -68,6 +69,8 @@ public class EnemyMover : MonoBehaviour
 
                 yield return new WaitForEndOfFrame();
             }
+            path[i].isEnemyWaking = false;
+
         }
 
         FinishPath();

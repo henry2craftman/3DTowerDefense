@@ -44,6 +44,8 @@ public class GridManager : MonoBehaviour
     {
         if(grid.ContainsKey(coordinates))
         {
+            print("¸·Èû");
+
             grid[coordinates].isWalkable = false;
         }
     }

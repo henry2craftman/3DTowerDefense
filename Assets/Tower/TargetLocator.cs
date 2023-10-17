@@ -17,7 +17,11 @@ public class TargetLocator : MonoBehaviour
 
     void Start()
     {
-        target = FindObjectOfType<EnemyMover>().transform;
+        EnemyMover enemy = FindObjectOfType<EnemyMover>();
+        if(enemy != null)
+        {
+            target = FindObjectOfType<EnemyMover>().transform;
+        }
     }
 
     void Update()
