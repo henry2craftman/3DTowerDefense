@@ -198,8 +198,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7166714447603300202}
   - {fileID: 5006083903533853065}
+  - {fileID: 7166714447603300202}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8512420444748054974
@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 75
+  buildInterval: 3
 --- !u!114 &5873698845264363732
 MonoBehaviour:
   m_ObjectHideFlags: 0

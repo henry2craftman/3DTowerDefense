@@ -69,8 +69,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda23395af48d9440a1285679720b543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyReward: 50
-  moneyPanalty: 50
+  moneyReward: 5
+  moneyPanalty: 5
 --- !u!114 &2411621461673098120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6aff0cd8c2ab244e8420a92c3203ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 50
+  maxHP: 5
   difficultyInscrese: 1
 --- !u!1001 &8305023529487110058
 PrefabInstance:
